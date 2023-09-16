@@ -1,0 +1,51 @@
+.pageAction {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.pageAction button {
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.deleteSelected {
+  background-color: #ff5171;
+  color: white;
+  border: 0px;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-right: 15%;
+}
+
+.selectedButton {
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  border: 1px solid #1890ff;
+  border-radius: 50%;
+  color: #1890ff;
+  margin-right: 3%;
+  cursor: default !important;
+}
+
+.otherButton {
+  height: 40px;
+  width: 40px;
+  background-color: #1890ff;
+  border: 0px;
+  border-radius: 50%;
+  color: white;
+  margin-right: 3%;
+}
+
+.disabledButton {
+  height: 40px;
+  width: 40px;
+  background-color: #f5f5f5;
+  border: 1px solid grey;
+  border-radius: 50%;
+  color: grey;
+  margin-right: 3%;
+  cursor: default !important;
+}

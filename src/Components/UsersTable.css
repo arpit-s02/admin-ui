@@ -1,0 +1,16 @@
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.usersTable thead tr th,
+.usersTable thead tr td {
+  text-align: left;
+  width: 20%;
+}
+
+.usersTable tr {
+  border-bottom: 1px solid lightgray;
+  height: 45px;
+}
