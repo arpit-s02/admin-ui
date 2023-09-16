@@ -1,4 +1,6 @@
-import "./UsersTable.css"
+import "./UsersTable.css";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 
 export default function usersTable({ usersToBeDisplayed, usersPerPage, allUsers, setAllUsers }) {
 
@@ -46,6 +48,11 @@ export default function usersTable({ usersToBeDisplayed, usersPerPage, allUsers,
         setAllUsers(users);
     }
 
+    const deleteOneUser = (allUsers, setAllUsers, userId) => {
+        const updatedUsers = allUsers.filter(item => item.id !== userId);
+        setAllUsers(updatedUsers);
+    }
+
     return (
         <table className="usersTable">
             <thead>
@@ -77,7 +84,13 @@ export default function usersTable({ usersToBeDisplayed, usersPerPage, allUsers,
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
-                            <td>button</td>
+                            <td>
+                                <EditNoteOutlinedIcon sx={{ mr: 1, cursor: 'pointer' }} />
+                                <DeleteOutlineOutlinedIcon
+                                    sx={{ color: 'red', cursor: 'pointer' }}
+                                    onClick={() => deleteOneUser(allUsers, setAllUsers, user.id)}
+                                />
+                            </td>
                         </tr>
                     )
                 })}
