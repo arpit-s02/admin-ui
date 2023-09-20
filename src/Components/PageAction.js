@@ -1,6 +1,19 @@
 import "./PageAction.css"
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
-export default function PageAction({ usersLength, usersPerPage, currentPage, setCurrentPage, allUsers, setAllUsers }) {
+export default function PageAction(props) {
+
+    const {
+        usersLength,
+        usersPerPage,
+        currentPage,
+        setCurrentPage,
+        allUsers,
+        setAllUsers
+    } = props
 
     const totalPages = Math.ceil(usersLength / usersPerPage);
     const firstPage = 1;
@@ -18,6 +31,10 @@ export default function PageAction({ usersLength, usersPerPage, currentPage, set
         setAllUsers(updatedUsers);
     }
 
+    if (!usersLength) {
+        return <div></div>
+    }
+
     return (
         <div className="pageAction">
             <button
@@ -32,14 +49,14 @@ export default function PageAction({ usersLength, usersPerPage, currentPage, set
                 onClick={() => setCurrentPage(firstPage)}
                 disabled={currentPage > firstPage ? false : true}
             >
-                &lt;&lt;
+                <KeyboardDoubleArrowLeftIcon />
             </button>
             <button
                 className={currentPage > firstPage ? 'otherButton' : 'disabledButton'}
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage > firstPage ? false : true}
             >
-                &lt;
+                <KeyboardArrowLeftIcon />
             </button>
 
             {pageNumbers.map((number) => {
@@ -58,7 +75,7 @@ export default function PageAction({ usersLength, usersPerPage, currentPage, set
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage < totalPages ? false : true}
             >
-                &gt;
+                <KeyboardArrowRightIcon />
             </button>
 
 
@@ -67,7 +84,7 @@ export default function PageAction({ usersLength, usersPerPage, currentPage, set
                 onClick={() => setCurrentPage(lastPage)}
                 disabled={currentPage < totalPages ? false : true}
             >
-                &gt;&gt;
+                <KeyboardDoubleArrowRightIcon />
             </button>
         </div>
     )

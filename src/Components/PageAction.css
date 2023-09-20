@@ -7,6 +7,11 @@
 .pageAction button {
   cursor: pointer;
   font-size: 1rem;
+  transition: all ease 0.3s;
+}
+
+.pageAction button:active {
+  transform: scale(0.8);
 }
 
 .deleteSelected {
@@ -27,6 +32,7 @@
   color: #1890ff;
   margin-right: 3%;
   cursor: default !important;
+  transform: none !important;
 }
 
 .otherButton {
@@ -48,4 +54,5 @@
   color: grey;
   margin-right: 3%;
   cursor: default !important;
+  transform: none !important;
 }

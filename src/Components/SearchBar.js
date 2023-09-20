@@ -1,6 +1,8 @@
 import "./SearchBar.css";
 
-export default function SearchBar({ searchValue, setSearchValue, setCurrentPage }) {
+export default function SearchBar(props) {
+
+    const { searchValue, setSearchValue, setCurrentPage } = props
 
     const firstPage = 1;
 

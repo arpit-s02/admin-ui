@@ -10,6 +10,7 @@ export default function HomePage() {
     const [allUsers, setAllUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
+    const [loading, setLoading] = useState(true);
     const usersPerPage = 10;
 
     const fetchUsers = async (url) => {
@@ -19,10 +20,12 @@ export default function HomePage() {
             return response.data;
         } catch (error) {
             if (error.response) {
-                console.log('error', error.response);
 
                 return [];
             }
+        }
+        finally {
+            setLoading(false);
         }
     }
 
@@ -33,7 +36,8 @@ export default function HomePage() {
             const users = data.map((item) => {
                 return {
                     ...item,
-                    checked: false
+                    checked: false,
+                    isEditing: false
                 }
             });
 
@@ -74,6 +78,20 @@ export default function HomePage() {
     }
 
     const usersToBeDisplayed = getUsersToBeDisplayed(searchedUsers, currentPage, usersPerPage);
+
+    if (loading) {
+        return (
+            <div className="homepage">
+                <SearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    setCurrentPage={setCurrentPage}
+                />
+
+                <div style={{ margin: '1rem' }}>Loading Users...</div>
+            </div>
+        )
+    }
 
     return (
         <div className="homepage">
