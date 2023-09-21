@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { config } from '../config'
+import { config } from '../../config'
 import axios from "axios";
-import SearchBar from "./SearchBar";
-import UsersTable from "./UsersTable";
-import PageAction from "./PageAction";
+import SearchBar from "../SearchBar/SearchBar";
+import UsersDetail from "../UsersDetail/UsersDetail";
+import PageNavigation from "../PageNavigation/PageNavigation";
 import "./HomePage.css"
 
 export default function HomePage() {
@@ -11,6 +11,7 @@ export default function HomePage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(true);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const usersPerPage = 10;
 
     const fetchUsers = async (url) => {
@@ -32,17 +33,8 @@ export default function HomePage() {
     useEffect(() => {
         (async () => {
             const data = await fetchUsers(config.endpoint);
-
-            const users = data.map((item) => {
-                return {
-                    ...item,
-                    checked: false,
-                    isEditing: false
-                }
-            });
-
-            setAllUsers(users);
-        })()
+            setAllUsers(data);
+        })();
     }, []);
 
     const handleSearch = (allUsers, searchValue) => {
@@ -101,20 +93,24 @@ export default function HomePage() {
                 setCurrentPage={setCurrentPage}
             />
 
-            <UsersTable
+            <UsersDetail
                 usersToBeDisplayed={usersToBeDisplayed}
                 usersPerPage={usersPerPage}
                 allUsers={allUsers}
                 setAllUsers={setAllUsers}
+                selectedUsers={selectedUsers}
+                setSelectedUsers={setSelectedUsers}
             />
 
-            <PageAction
+            <PageNavigation
                 usersLength={searchedUsers.length}
                 usersPerPage={usersPerPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 allUsers={allUsers}
                 setAllUsers={setAllUsers}
+                selectedUsers={selectedUsers}
+                setSelectedUsers={setSelectedUsers}
             />
         </div>
     )

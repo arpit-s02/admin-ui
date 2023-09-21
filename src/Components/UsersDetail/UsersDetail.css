@@ -1,17 +1,25 @@
-.usersTable {
+.usersDetail {
   width: 100%;
-  border-collapse: collapse;
+  overflow-x: auto;
   margin-bottom: 1rem;
 }
 
-.usersTable thead tr th,
-.usersTable thead tr td {
+.usersDetail table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usersDetail table thead tr th,
+.usersDetail table thead tr td,
+.usersDetail table tbody tr td {
   text-align: left;
   width: 20%;
   font-size: 1rem;
+  padding: 8px;
+  margin-right: 2rem;
 }
 
-.usersTable tr {
+.usersDetail table tr {
   border-bottom: 1px solid lightgray;
   height: 45px;
   box-sizing: border-box;
