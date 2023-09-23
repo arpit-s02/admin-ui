@@ -1,0 +1,21 @@
+.userItem,
+.selectedRow {
+  border-bottom: 1px solid lightgray;
+  height: 45px;
+  box-sizing: border-box;
+}
+
+.userItem td,
+.selectedRow td {
+  text-align: left;
+  width: 20%;
+  font-size: 1rem;
+  padding: 8px;
+  margin-right: 2rem;
+}
+
+.selectedRow {
+  background-color: lightgray;
+  color: black;
+  border-bottom: 1px solid black !important;
+}

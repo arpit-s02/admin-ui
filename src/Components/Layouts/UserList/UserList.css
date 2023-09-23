@@ -1,0 +1,10 @@
+.userList {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.userList table {
+  width: 100%;
+  border-collapse: collapse;
+}

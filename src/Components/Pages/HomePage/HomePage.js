@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react"
-import { config } from '../../config'
+import { config } from '../../../config'
 import axios from "axios";
-import SearchBar from "../SearchBar/SearchBar";
-import UsersDetail from "../UsersDetail/UsersDetail";
-import PageNavigation from "../PageNavigation/PageNavigation";
+import SearchBar from "../../Layouts/SearchBar/SearchBar";
+import UserList from "../../Layouts/UserList/UserList";
+import ControlPanel from "../../Layouts/ControlPanel/ControlPanel";
 import "./HomePage.css"
 
 export default function HomePage() {
     const [allUsers, setAllUsers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchValue, setSearchValue] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true);
     const usersPerPage = 10;
 
     const fetchUsers = async (url) => {
         try {
             const response = await axios.get(url);
-
             return response.data;
         } catch (error) {
-            if (error.response) {
-
-                return [];
-            }
+            return [];
         }
         finally {
             setLoading(false);
@@ -34,50 +30,34 @@ export default function HomePage() {
         (async () => {
             const data = await fetchUsers(config.endpoint);
             setAllUsers(data);
+            setFilteredUsers(data);
         })();
     }, []);
 
-    const handleSearch = (allUsers, searchValue) => {
+    const getUsersOnCurrentPage = (filteredUsers, currentPage, usersPerPage) => {
 
-        if (searchValue === "") {
-            return allUsers;
-        }
-
-        const filteredUsers = allUsers.filter((user) => (
-            user.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchValue.toLowerCase()) ||
-            user.role.toLowerCase().includes(searchValue.toLowerCase())
-
-        ));
-
-        return filteredUsers;
-    }
-
-    const searchedUsers = handleSearch(allUsers, searchValue);
-
-    const getUsersToBeDisplayed = (searchedUsers, currentPage, usersPerPage) => {
-
-        if (!searchedUsers.length) {
+        if (!filteredUsers.length) {
             return [];
         }
 
+        // calculate start and end index of users to be displayed on current page
         const userEndIndex = currentPage * usersPerPage;
         const userStartIndex = userEndIndex - usersPerPage;
 
-        const usersToBeDisplayed = searchedUsers.slice(userStartIndex, userEndIndex);
+        const usersOnCurrentPage = filteredUsers.slice(userStartIndex, userEndIndex);
 
-        return usersToBeDisplayed;
+        return usersOnCurrentPage;
     }
 
-    const usersToBeDisplayed = getUsersToBeDisplayed(searchedUsers, currentPage, usersPerPage);
+    const usersOnCurrentPage = getUsersOnCurrentPage(filteredUsers, currentPage, usersPerPage);
 
     if (loading) {
         return (
             <div className="homepage">
                 <SearchBar
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
                     setCurrentPage={setCurrentPage}
+                    allUsers={allUsers}
+                    setFilteredUsers={setFilteredUsers}
                 />
 
                 <div style={{ margin: '1rem' }}>Loading Users...</div>
@@ -88,22 +68,21 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <SearchBar
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
                 setCurrentPage={setCurrentPage}
+                allUsers={allUsers}
+                setFilteredUsers={setFilteredUsers}
             />
 
-            <UsersDetail
-                usersToBeDisplayed={usersToBeDisplayed}
-                usersPerPage={usersPerPage}
+            <UserList
+                usersOnCurrentPage={usersOnCurrentPage}
                 allUsers={allUsers}
                 setAllUsers={setAllUsers}
                 selectedUsers={selectedUsers}
                 setSelectedUsers={setSelectedUsers}
             />
 
-            <PageNavigation
-                usersLength={searchedUsers.length}
+            <ControlPanel
+                usersLength={filteredUsers.length}
                 usersPerPage={usersPerPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}

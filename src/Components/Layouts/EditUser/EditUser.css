@@ -1,0 +1,14 @@
+.userInput {
+  height: 42px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  font-size: 1rem;
+  background-color: inherit;
+  padding: 8px;
+  color: inherit;
+  background-color: white;
+}
+
+.userInput:focus {
+  outline: none;
+}
